@@ -20,7 +20,7 @@ topic = "sensor/distance"
 mqtt_client = mqtt.Client(client_id)
 
 # Bluetooth setup
-serverMACAddress = '00:00:00:00:00:00'  # Replace with your Arduino's MAC address
+serverMACAddress = 'ec:62:60:8f:5a:e6'  
 port_bt = 1
 sock = bluetooth.BluetoothSocket(bluetooth.RFCOMM)
 
