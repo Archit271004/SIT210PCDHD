@@ -1,0 +1,89 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Refill Control</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #000000;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            height: 100vh;
+            margin: 0;
+            color: white;
+        }
+        .container {
+            background-color: #ffffff;
+            border-radius: 10px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+            padding: 20px 40px;
+            text-align: center;
+            color: #333;
+        }
+        h1 {
+            margin-top: 20px;
+        }
+        .button-group {
+            margin: 10px 0;
+        }
+        button {
+            border: none;
+            border-radius: 5px;
+            color: white;
+            padding: 10px 20px;
+            margin: 5px;
+            text-align: center;
+            text-decoration: none;
+            display: inline-block;
+            font-size: 16px;
+            transition: background-color 0.3s;
+            cursor: pointer;
+        }
+        .on { background-color: #4CAF50; }
+        .on:hover { background-color: #388E3C; }
+        .off { background-color: #f44336; }
+        .off:hover { background-color: #d32f2f; }
+    </style>
+</head>
+<body>
+    <h1>Refill Control</h1>
+    <div class="container">
+        <h2>Refill</h2>
+        <div class="button-group">
+            <button class="on" onclick="setLEDState(true)">Turn On</button>
+            <button class="off" onclick="setLEDState(false)">Turn Off</button>
+        </div>
+    </div>
+
+    <!-- Firebase SDKs -->
+    <script type="module">
+        // Import the functions you need from the SDKs you need
+        import { initializeApp } from "https://www.gstatic.com/firebasejs/10.12.2/firebase-app.js";
+        import { getDatabase, ref, set } from "https://www.gstatic.com/firebasejs/10.12.2/firebase-database.js";
+
+        // Your web app's Firebase configuration
+        const firebaseConfig = {
+            apiKey: "AIzaSyCso6Uctn_fkUxrK9leHwwGoLJK0zoCTuo",
+            authDomain: "monitorrefill.firebaseapp.com",
+            databaseURL: "https://monitorrefill-default-rtdb.firebaseio.com",
+            projectId: "monitorrefill",
+            storageBucket: "monitorrefill.appspot.com",
+            messagingSenderId: "343978604229",
+            appId: "1:343978604229:web:329d982b87887d976be2ac",
+            measurementId: "G-29DKCHYNKM"
+        };
+
+        // Initialize Firebase
+        const app = initializeApp(firebaseConfig);
+        const database = getDatabase(app);
+
+        // Make setLEDState available globally
+        window.setLEDState = function(state) {
+            set(ref(database, 'LEDstate'), state)
+                .then(() => console.log(`Set LED to ${state}`))
+                .catch((error) => console.error('Error:', error));
+        };
+    </script>
+</body>
+</html>
